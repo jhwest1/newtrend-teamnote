@@ -39,8 +39,8 @@ namespace dinic {
 	}
 	int dfs(int v, int f) {
 		if (v == snk) return f;
-		while (sp[v] < g[v].size()) {
-			auto &e = g[v][sp[v]++];
+		for (; sp[v] < g[v].size(); sp[v]++) {
+			auto &e = g[v][sp[v]];
 			if (e.c == 0 || ds[e.v] != ds[v] + 1) continue;
 
 			int h = dfs(e.v, min(f, e.c));
@@ -71,3 +71,17 @@ namespace dinic {
 		return ret;
 	}
 };
+
+// LOJ 127
+int main() {
+	cin.tie(0); ios_base::sync_with_stdio(0);
+	int n, m, s, t;
+	cin >> n >> m >> s >> t;
+	dinic::init(n, s - 1, t - 1);
+	for (int i = 0; i < m; i++) {
+		int u, v, w;
+		cin >> u >> v >> w;
+		dinic::add_edge(u - 1, v - 1, w);
+	}
+	cout << dinic::flow() << '\n';
+}
