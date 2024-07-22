@@ -1,0 +1,1 @@
+{"name":"Local: aho-corasick-karuna","url":"f:\\Code\\teamnote\\aho-corasick-karuna.cpp","tests":[{"id":1721634080194,"input":"3\nwww\nwoo\njun\n3\nmyungwoo\nhongjun\ndooho","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\Code\\teamnote\\aho-corasick-karuna.cpp","group":"local","local":true}
