@@ -57,7 +57,7 @@ namespace HopcroftKarp
         return false;
     }
 	
-	// Left vertices [1, n], Right vertices [1, m]
+	// Left vertices : 1 ~ N, Right vertices : 1 ~ M
 	// A[i] : for left vertex i, 0 if unmatched, matched right vertex otherwise
 	// B[i] : for right vertex i, 0 if unmatched, matched left vertex otherwise
 	// returns the size of the matching
