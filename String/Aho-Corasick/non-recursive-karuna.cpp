@@ -2,7 +2,7 @@
 using namespace std;
 
 namespace aho_corasick {
-	const int SZ = 26;
+	const int CH = 26;
 
 	struct node {
 		int fail, link;
@@ -10,7 +10,7 @@ namespace aho_corasick {
 
 		node() {
 			fail = link = 0;
-			chd = vector<int>(SZ);
+			chd = vector<int>(CH);
 		}
 	};
 	vector<node> nd;
@@ -32,12 +32,12 @@ namespace aho_corasick {
 	}
 	void calc() {
 		queue<int> Q;
-		for (int c = 0; c < SZ; c++) {
+		for (int c = 0; c < CH; c++) {
 			if (nd[0].chd[c]) Q.push(nd[0].chd[c]);
 		}
 		while (!Q.empty()) {
 			int v = Q.front(); Q.pop();
-			for (int c = 0; c < SZ; c++) {
+			for (int c = 0; c < CH; c++) {
 				int x = nd[v].chd[c];
 				if (x) {
 					int f = nd[v].fail;
