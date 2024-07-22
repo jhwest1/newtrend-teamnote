@@ -13,7 +13,7 @@ namespace Dinic
     void init(int _N)
     {
         N=_N;
-        for(int i=1; i<=N; i++) adj[i].clear();
+        for(int i=1; i<=N; i++) adj[i]=vector<Edge>();
     }
 
     void add_edge(int u, int v, int c)
