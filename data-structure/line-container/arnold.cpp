@@ -4,10 +4,12 @@ namespace LineContainer
     struct Line
     {
         mutable ll a, b, p;
-        bool operator < (const Line& o) const { return a > o.a; } // min : > , max : <
+        bool operator < (const Line& o) const { return a!=o.a ? o.a<a : b<o.b; } // min : < , max : > (both)
         bool operator < (ll x) const { return p < x; }
     };
 
+    // LineContainer::LineContainer cht;
+    // multiset of Line, sorted in increasing order of cross points
     struct LineContainer : multiset<Line, less<>>
     {
         // for doubles, use INF = 1/.0, div(a,b) = a/b
