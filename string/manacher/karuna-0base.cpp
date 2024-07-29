@@ -11,3 +11,16 @@ vector<int> manacher(string S) {
 	}
 	return a;
 }
+
+// https://judge.yosupo.jp/problem/enumerate_palindromes
+int main() {
+	cin.tie(0); ios_base::sync_with_stdio(0);
+	string S;
+	cin >> S;
+	string T;
+	for (int i = 0; i < S.size(); i++) T += '#', T += S[i];
+	T += '#';
+	auto ret = manacher(T);
+	for (int i = 1; i < (int)ret.size() - 1; i++) cout << ret[i] - 1 << ' ';
+	cout << '\n';
+}
