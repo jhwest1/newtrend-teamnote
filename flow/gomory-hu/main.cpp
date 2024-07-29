@@ -12,8 +12,8 @@ using namespace std;
 // par represents 1-rooted tree. if i > 1, par[i] = (parent, cost)
 // i-j cut in original graph = i-j cut in gomory-hu tree
 // time complexity: O(V * T(maxflow))
-const int SZ = 101010;
 namespace gomory_hu {
+	const int SZ = 101010;
 	typedef long long T;
 	struct edge { 
 		int u, v; T w; 
