@@ -31,7 +31,6 @@ namespace suffix_automaton {
 			nd[x].len = nd[pos].len + 1;
 			nd[x].pos = i;
 			nd[x].flag = true;
-
 			for (int v = pos; v != -1; v = nd[v].link) {
 				if (!nd[v].chd[c]) nd[v].chd[c] = x;
 				else {
@@ -44,7 +43,6 @@ namespace suffix_automaton {
 						nd[z].link = nd[y].link;
 						nd[z].chd = nd[y].chd;
 						nd[y].link = nd[x].link = z;
-
 						for (; v != -1 && nd[v].chd[c] == y; v = nd[v].link) {
 							nd[v].chd[c] = z;
 						}
