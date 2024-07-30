@@ -8,3 +8,4 @@
 - directed-mst/main.cpp
 - vizing/main.cpp
 - kth-shortest-path/main.cpp
+- berlekamp-massey/main.cpp
