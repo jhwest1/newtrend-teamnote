@@ -3,6 +3,7 @@ using namespace std;
 
 const int SV = 2020;
 namespace blossom {
+	// O(V^2 E)
 	int n, t;
 	int match[SV], par[SV], vis[SV], org[SV], aux[SV];
 	vector<int> g[SV], S;
