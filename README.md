@@ -6,3 +6,4 @@
 - simplex/main.cpp
 - spfa/main.cpp
 - directed-mst/main.cpp
+- vizing/main.cpp
