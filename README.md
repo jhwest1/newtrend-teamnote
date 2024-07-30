@@ -7,3 +7,4 @@
 - spfa/main.cpp
 - directed-mst/main.cpp
 - vizing/main.cpp
+- kth-shortest-path/main.cpp
