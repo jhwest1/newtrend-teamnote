@@ -18,7 +18,7 @@ namespace dinic {
 		for (int i = 0; i < n; i++) g[i].clear();
 		n = _n;
 	}
-	void add_edge(int u, int v, T c, bool dir) {
+	void add_edge(int u, int v, T c, bool dir = true) {
 		g[u].push_back({v, c, (int)g[v].size()});
 		g[v].push_back({u, dir ? 0 : c, (int)g[u].size() - 1});
 	}
@@ -83,7 +83,7 @@ int main() {
 	for (int i = 0; i < m; i++) {
 		int u, v, w;
 		cin >> u >> v >> w;
-		dinic::add_edge(u - 1, v - 1, w, true);
+		dinic::add_edge(u - 1, v - 1, w);
 	}
 	cout << dinic::flow(s - 1, t - 1) << '\n';
 }

@@ -29,7 +29,7 @@ struct HLPP {
 		mxh = 0;
     }
 
-    void add_edge(int x, int y, T c, bool dir) { // directed edge : dir = true, undirected edge : dir = false
+    void add_edge(int x, int y, T c, bool dir = true) { // directed edge : dir = true, undirected edge : dir = false
         gph[x].push_back({y, c, (int)gph[y].size()});
         gph[y].push_back({x, dir ? 0 : c, (int)gph[x].size() - 1});
     }

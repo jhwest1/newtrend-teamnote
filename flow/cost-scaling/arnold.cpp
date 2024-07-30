@@ -1,10 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-typedef long long ll;
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
-
 // 0-based
 struct HLPP {
     // O(V^2 sqrt(E))
@@ -12,12 +5,13 @@ struct HLPP {
     // hlpp.flow(s, t, n)을 호출해서 |V|=n 일 때 s에서 t로의 유량 구하기
 
 	typedef long long T;
+
     const static int MAXV = 1200;
-    struct edge { int y, c, r; };
+    struct edge { int y; T c; int r; };
 
     int n;
     vector<edge> gph[MAXV];
-    ll ex[MAXV];
+    T ex[MAXV];
     vector<int> act[MAXV * 2];
     int h[MAXV];
     vector<int> st[MAXV];
@@ -35,14 +29,14 @@ struct HLPP {
 		mxh = 0;
     }
 
-    void add_edge(int x, int y, int c) {
+    void add_edge(int x, int y, T c, bool dir = true) { // directed edge : dir = true, undirected edge : dir = false
         gph[x].push_back({y, c, (int)gph[y].size()});
-        gph[y].push_back({x, 0, (int)gph[x].size() - 1});
+        gph[y].push_back({x, dir ? 0 : c, (int)gph[x].size() - 1});
     }
 
     void push(int v, int e) {
         auto &w = gph[v][e];
-        int t = min(ex[v], 1ll * w.c);
+        T t = min(ex[v], w.c);
         if (!t || h[w.y] >= h[v]) return;
         if (!ex[w.y]) act[h[w.y]].push_back(w.y);
         w.c -= t;
@@ -64,7 +58,7 @@ struct HLPP {
         }
     }
 
-    ll flow(int s, int t) {
+    T flow(int s, int t) {
         h[s] = n;
         for (auto &v : gph[s]) {
             if (v.c && !ex[v.y]) act[0].push_back(v.y);
@@ -90,14 +84,13 @@ struct HLPP {
 };
 
 struct Circulation {
-    // O(V^3 log(VC))
     typedef long long T;
 
     const T INF = numeric_limits<T>::max() / 2;
 
     int n;
     T lbsum = 0;
-    HLPP mf;
+    HLPP mf; // any max flow algorithm
     
     // dummy src = n, dummy snk = n+1
     Circulation(int k) : mf(k+2) {
@@ -126,6 +119,8 @@ struct Circulation {
 };
 
 struct MinCostCirculation {
+    // O(V^3 log(VC))
+
     typedef long long T;
 
     const int SCALE = 3; // scale by 1/(1 << SCALE)
@@ -162,7 +157,7 @@ struct MinCostCirculation {
         T eps = 0;
         for(auto &i : estk){
             T curFlow;
-            if(i.s != i.e) curFlow = i.r - circ.mf.gph[i.s][ptr[i.s]].c;
+            if(i.s != i.e) curFlow = i.r - circ.mf.gph[i.s][ptr[i.s]].c; // gph : name of adjacency list in max flow
             else curFlow = i.r;
             int srev = gph[i.e].size();
             int erev = gph[i.s].size();
@@ -230,77 +225,4 @@ struct MinCostCirculation {
         }
         return make_pair(true, ans / 2);
     }
-    void bellmanFord(){
-        fill(p.begin(), p.end(), T(0));
-        bool upd = 1;
-        while(upd){
-            upd = 0;
-            for(int i = 0; i < n; i++){
-                for(auto &j : gph[i]){
-                    if(j.rem > 0 && p[j.pos] > p[i] + j.cost){
-                        p[j.pos] = p[i] + j.cost;
-                        upd = 1;
-                    }
-                }
-            }
-        }
-    }
 };
-
-ostream& operator<<(ostream&os,__int128 i){
-    if(i==0)
-        return os<<0;
-    static char buf[100];
-    if(i<0){
-        os<<"-";
-        i=-i;
-    }
-    int p=0;
-    while(i){
-        buf[p++]='0'+i%10;
-        i/=10;
-    }
-    reverse(buf,buf+p);
-    buf[p]=0;
-    return os<<buf;
-}
-
-int main(){
-    // ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-
-    int n, m;
-    cin >> n >> m;
-    MinCostCirculation mcc(n + 1);
-    vector<int> ptr(n + 1);
-    for(int i = 0; i < n; i++){
-        int x; cin >> x;
-        mcc.add_edge(n, i, x, x, 0);
-        ptr[n]++; ptr[i]++;
-    }
-    vector<pii> track;
-    for(int i = 0; i < m; i++){
-        int s, t, l, u, c;
-        cin >> s >> t >> l >> u >> c;
-        mcc.add_edge(s, t, l, u, c);
-        track.emplace_back(s, ptr[s]);
-        ptr[s]++;
-        ptr[t]++;
-    }
-    auto sln = mcc.solve();
-    if(!sln.first){
-        cout << "infeasible\n";
-        return 0;
-    }
-    vector<ll> flows;
-    __int128 ret = 0;
-    for(auto &[v, p] : track){
-        flows.push_back(mcc.gph[v][p].cap - mcc.gph[v][p].rem);
-        ret += mcc.gph[v][p].cost * flows.back();
-    }
-    cout << ret << "\n";
-    mcc.bellmanFord();
-    for(int i = 0; i < n; i++) cout << mcc.p[i] << "\n";
-    for(auto &i : flows) cout << i << "\n";
-}

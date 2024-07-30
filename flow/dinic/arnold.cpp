@@ -13,13 +13,13 @@ struct Dinic
     int lvl[MAXV+10], pos[MAXV+10];
     T lim;
 
-    void init(int _N)
+    Dinic(int _N)
     {
         N=_N;
         for(int i=1; i<=N; i++) adj[i]=vector<Edge>();
     }
 
-    void add_edge(int u, int v, T c, bool dir) // directed edge : dir = true, undirected edge : dir = false
+    void add_edge(int u, int v, T c, bool dir = true) // directed edge : dir = true, undirected edge : dir = false
     {
         adj[u].push_back({v, c, adj[v].size()});
         adj[v].push_back({u, dir ? 0 : c, adj[u].size()-1});
