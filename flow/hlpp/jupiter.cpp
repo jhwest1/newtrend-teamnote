@@ -1,12 +1,14 @@
 // 0-based
-namespace HLPP {
+struct HLPP {
     // O(V^2 sqrt(E))
     // add_edge()를 호출해서 간선 추가
     // hlpp.flow(s, t, n)을 호출해서 |V|=n 일 때 s에서 t로의 유량 구하기
 
+	typedef long long T;
     const int MAXV = 1200;
     struct edge { int y, c, r; };
 
+    int n;
     vector<edge> gph[MAXV];
     ll ex[MAXV];
     vector<int> act[MAXV * 2];
@@ -14,8 +16,16 @@ namespace HLPP {
     vector<int> st[MAXV];
     int mxh;
 
-    void init() {
-        // TODO
+    HLPP(int _n) {
+        n = _n;
+		for (int i = 0; i < n; ++i)
+		{
+            ex[i] = h[i] = 0;
+            st[i].clear();
+            gph[i].clear();
+		}
+        for(int i=0; i < n * 2; i++) act[i].clear();
+		mxh = 0;
     }
 
     void add_edge(int x, int y, int c) {
@@ -47,7 +57,7 @@ namespace HLPP {
         }
     }
 
-    ll flow(int s, int t, int n) {
+    ll flow(int s, int t) {
         h[s] = n;
         for (auto &v : gph[s]) {
             if (v.c && !ex[v.y]) act[0].push_back(v.y);
