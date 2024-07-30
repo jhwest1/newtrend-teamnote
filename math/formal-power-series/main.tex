@@ -1,0 +1,10 @@
+\begin{itemize}
+    \item Inverse: $B_k = A^{-1} (mod \ x^a)$일 때 $B_{k+1}=B_k (2-A B_k ) (mod \ x^{2a})$로 놓으면 $B_{k+1}=A^{-1} (mod \ x^{2a})$. $O(nlogn)$
+    \item Eucliean Division: $deg A = n, deg B = m$일 때, $B(x)D(x)+R(x)=A(x), deg D \le m - n$인 $D$ 찾기; $D^R(x) = A^R(x)(B^R(x))^{-1} (mod \ x^{n-m+1})$; 이 때 $A^R(x) = x^n A(x^{-1})$, $B^R(x) = x^m B(x^{-1})$, $D^R(x) = x^{m-n} D(x^{-1})$. $O(nlogn)$
+    \item Newton's Method: $F(P)=0$인 polynomial $P$를 찾기; $F(Q_k)=0 (mod \ x^a )$일 때 $Q_{k+1}=Q_k - \frac{F(Q_k)}{F'(Q_k)} (mod \ x^{2a})$로 놓으면 $F(Q_{k+1})=0 (mod \ x^{2a})$. \\
+    Example : $Q = e^P$, $ln Q = P$, $F(Q) = ln Q - P$, $F'(Q) = \frac{1}{Q}$
+    \item Logarithm: $\int \frac{P'(x)}{P(x)}$. $O(nlogn)$
+    \item Exponent: $Q_{k+1} = Q_k (1 + P - ln Q_k )$. $O(nlog^2 n)$
+    \item Multipoint Evaluation: $A(x)$를 $(x-p_i )$로 나눈 나머지를 찾는 문제와 같으니, 분할정복으로 나머지 계산. $O(nlog^2 n)$
+    \item Interpolation: $A(x) = \sum_{i=1}^n{y_i \prod_{j\neq i}{\frac{x-x_j}{x_i - x_j}}}$. 각각의 $i$에 대한 분모만 알면 분할정복을 할 수 있음. 분모를 알기 위해 $P(x)=(x-x_1) ... (x-x_n)$이라고 하면 $i$번째 분모는 $P'(x_i)$. $O(nlog^2n)$
+\end{itemize}
