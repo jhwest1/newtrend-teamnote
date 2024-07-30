@@ -5,12 +5,13 @@ struct HLPP {
     // hlpp.flow(s, t, n)을 호출해서 |V|=n 일 때 s에서 t로의 유량 구하기
 
 	typedef long long T;
-    const int MAXV = 1200;
-    struct edge { int y, c, r; };
+
+    const static int MAXV = 1200;
+    struct edge { int y; T c; int r; };
 
     int n;
     vector<edge> gph[MAXV];
-    ll ex[MAXV];
+    T ex[MAXV];
     vector<int> act[MAXV * 2];
     int h[MAXV];
     vector<int> st[MAXV];
@@ -28,14 +29,14 @@ struct HLPP {
 		mxh = 0;
     }
 
-    void add_edge(int x, int y, int c) {
+    void add_edge(int x, int y, T c, bool dir) { // directed edge : dir = true, undirected edge : dir = false
         gph[x].push_back({y, c, (int)gph[y].size()});
-        gph[y].push_back({x, 0, (int)gph[x].size() - 1});
+        gph[y].push_back({x, dir ? 0 : c, (int)gph[x].size() - 1});
     }
 
     void push(int v, int e) {
         auto &w = gph[v][e];
-        int t = min(ex[v], 1ll * w.c);
+        T t = min(ex[v], w.c);
         if (!t || h[w.y] >= h[v]) return;
         if (!ex[w.y]) act[h[w.y]].push_back(w.y);
         w.c -= t;
@@ -57,7 +58,7 @@ struct HLPP {
         }
     }
 
-    ll flow(int s, int t) {
+    T flow(int s, int t) {
         h[s] = n;
         for (auto &v : gph[s]) {
             if (v.c && !ex[v.y]) act[0].push_back(v.y);
@@ -80,4 +81,4 @@ struct HLPP {
         }
         return ex[t];
     }
-}
+};
