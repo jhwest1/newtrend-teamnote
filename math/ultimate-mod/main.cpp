@@ -1,3 +1,4 @@
+typedef unsigned int ui;
 typedef unsigned long long ull;
 const ull MOD = 0xffff'ffff'0000'0001;
 struct mint
