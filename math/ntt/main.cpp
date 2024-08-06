@@ -41,11 +41,12 @@ void dft(vector<mint> &F, bool inv) {
 	}
 }
 vector<mint> multiply(vector<mint> F, vector<mint> G) {
-	int n = 1;
-	while (n < (int)F.size() + G.size()) n <<= 1;
+	int n = 1, m = (int)F.size() + (int)G.size() - 1;
+	while (n <= m) n <<= 1;
 	F.resize(n); G.resize(n);
 	dft(F, false); dft(G, false);
 	for (int i = 0; i < n; i++) F[i] *= G[i];
 	dft(F, true);
+	F.resize(m);
 	return F;
 }
