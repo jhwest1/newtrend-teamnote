@@ -53,7 +53,7 @@ namespace Alien
     {
         // lambda equals slope
         // minimum : K increase, lambda increase
-        // maximum : k increase, lambda decrease
+        // maximum : K increase, lambda decrease
 
         ll lo=-1e18, hi=1e18; // range for lambda is [2*lo+1, 2*hi+1]
         while(lo+1<hi)
