@@ -1,7 +1,7 @@
 const int MOD = 998244353;
 const mint G = 3; // primitive root
 // or (MOD, G) = (0xffffffff00000001, 7)
-// define mpow here
+// define mint, mpow here
 void dft(vector<mint> &F, bool inv) {
 	int n = F.size();
 	int b = __lg(n);
