@@ -6,7 +6,7 @@ struct UF1
 {
 	int n;
 	vector<int> par;
-	UF1(int n) : n(n), par(n) { for(int i = 0; i < n; ++i) par[i] = i; }
+	UF1(int n) : n(n), par(n) { iota(par.begin(), par.end(), 0); }
 	int fnd(int x) { return par[x] == x ? x : par[x] = fnd(par[x]); }
 	bool uni(int x, int y) { x = fnd(x), y = fnd(y); if(x == y) return false; par[x] = y; return true; }
 };

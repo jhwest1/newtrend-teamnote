@@ -1,6 +1,6 @@
 // no loop, 2-vertex-connected: only first ear is cycle, 2-edge-connected: every ear can be cycle.
-const int MAXN = 101010;
-int n, cnt = 0; vector<int> gph[MAXN], ls[MAXN]; bool chc[MAXN]; int ord[MAXN], rev[MAXN], par[MAXN]; vector<vector<int>> ear;
+const int SV = 101010;
+int n, cnt = 0; vector<int> gph[SV], ls[SV]; bool chc[SV]; int ord[SV], rev[SV], par[SV]; vector<vector<int>> ear;
 void init() {
 	for(int i = 0; i <= n; ++i) gph[i].clear(), chc[i] = false, ord[i] = 0, rev[i] = 0, par[i] = 0, ls[i].clear();
 	ear.clear();
@@ -11,8 +11,8 @@ void dfs(int x, int p) {
 	ord[x] = ++cnt;
 	for(auto y : gph[x]) if(!ord[y]) dfs(y, x);
 }
-void ear_decomposition(void) {
-	dfs(0, 0); // 0-based
+void ear_decomposition() {
+	dfs(1, 1); // 1-based
 	for(int i = 0; i < n; ++i) rev[ord[i]] = i;
 	for(int i = 1; i <= n; ++i) {
 		int x = rev[i];

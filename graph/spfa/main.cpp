@@ -1,11 +1,12 @@
 const int SV = 101010;
+typedef long long T;
 namespace spfa
 {
 	// INF should be larger than E|X|
-	const long long INF = (long long)1e18 + 100;
+	const T INF = (T)1e18 + 100;
 	int n;
 	vector<pii> gph[SV];
-	long long dist[SV];
+	T dist[SV];
 	int par[SV];
 	bool inq[SV];
 	int in[SV];
