@@ -83,14 +83,9 @@ namespace kth_shortest_path
 					chc[x] = true;
 					continue;
 				}
-				// cout << x << ' ' << y << ' ' << c << endl;
 				rt[x] = hp.mrge(rt[x], hp.mk({c + dst[y] - dst[x], y}));
 			}
 		}
-
-		// for(auto i : top) cout << i << ' '; cout << endl;
-		// for(int i = 0; i < n; ++i) cout << nxt[i] << ' '; cout << endl;
-		// for(int i = 0; i < n; ++i) cout << rt[i] << ' '; cout << endl;
 
 		vector<ll> ret({dst[s]});
 		priority_queue<pll, vector<pll>, greater<pll>> PQ;
