@@ -62,7 +62,11 @@ namespace bcc
 
 		return ret;
 	}
-	
+
+    // bcnt : number of bcc
+    // bcc[c] : vertices of color c
+    // color[v] : colors of vertex v
+    // ecol[e] : color of edge e
 	void get_bcc()
 	{
 		for(int i = 1; i <= n; ++i) if(!in[i]) dfs(i, -1);
