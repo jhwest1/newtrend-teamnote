@@ -1,13 +1,15 @@
 typedef complex<double> cpx;
+typedef __int128 dll;
 
 const double pi = acos(-1);
+// D^2 < |X|
 const int D = 32000;
-const int MOD = (int)998244353;
 
 int M, B;
 vector<int> rev;
 vector<cpx> _w;
 
+// |F|+|G| <= 2^_B
 void init(int _B) {
 	B = _B;
 	M = 1 << B;
@@ -40,7 +42,8 @@ void dft(vector<cpx> &F, bool inv) {
 	}
 	if (inv) for (int i = 0; i < n; i++) F[i] /= n;
 }
-vector<ll> multiply(vector<int> F, vector<int> G) {
+// Safe for sum(p[i]^2 + q[i]^2) lg2(n) < 9e14
+vector<dll> multiply(vector<ll> F, vector<ll> G) {
 	int n = 1;
 	while (n < (int)F.size() + G.size()) n <<= 1;
 
@@ -60,8 +63,8 @@ vector<ll> multiply(vector<int> F, vector<int> G) {
 	dft(R, true);
 	dft(S, true);
 	vector<ll> Z((int)F.size() + (int)G.size() - 1);
-	for(int i = 0; i < (int)Z.size(); i++) Z[i] = ((ll)round(R[i].real()) % MOD * D * D
-		+ (ll)round(R[i].imag() + S[i].imag()) % MOD * D + (ll)round(S[i].real())) % MOD;
-	// while(Z.size() && Z.back() == 0) Z.pop_back(); 
+	for(int i = 0; i < (int)Z.size(); i++) Z[i] = (ll)round(R[i].real()) * D * D
+		+ (ll)round(R[i].imag() + S[i].imag()) * D + (ll)round(S[i].real());
+
 	return Z;
 }
