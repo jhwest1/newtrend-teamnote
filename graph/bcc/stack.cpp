@@ -1,13 +1,13 @@
-const int MAXV = 505050;
-const int MAXE = 505050;
+const int SV = 505050;
+const int SE = 505050;
 namespace bcc
 {
-	vector<pii> gph[MAXV];
-	pii E[MAXE];
-	vector<int> color[MAXV], bcc[MAXV];
-	int ecol[MAXE];
-	bool chc[MAXV];
-	int in[MAXV];
+	vector<pii> gph[SV];
+	pii E[SE];
+	vector<int> color[SV], bcc[SV];
+	int ecol[SE];
+	bool chc[SV];
+	int in[SV];
 	int cnt, bcnt;
 	vector<int> S;
 
