@@ -1,23 +1,20 @@
 // 0-based
+// hlpp.flow(s, t) = maxflow
 struct HLPP {
-    // O(V^2 sqrt(E))
-    // add_edge()를 호출해서 간선 추가
-    // hlpp.flow(s, t, n)을 호출해서 |V|=n 일 때 s에서 t로의 유량 구하기
-
 	typedef long long T;
 
-    const static int MAXV = 1200;
+    const static int SV = 1200;
     struct edge { int y; T c; int r; };
 
     int n;
-    vector<edge> gph[MAXV];
-    T ex[MAXV];
-    vector<int> act[MAXV * 2];
-    int h[MAXV];
-    vector<int> st[MAXV];
+    vector<edge> gph[SV];
+    T ex[SV];
+    vector<int> act[SV * 2];
+    int h[SV];
+    vector<int> st[SV];
     int mxh;
 
-    HLPP(int _n) {
+    void init(int _n) {
         n = _n;
 		for (int i = 0; i < n; ++i)
 		{
