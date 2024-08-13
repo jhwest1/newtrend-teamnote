@@ -41,13 +41,15 @@ namespace kth_shortest_path
 		n = _n;
 		for(int i = 0; i < n; ++i) gph[i].clear();
 		for(int i = 0; i < n; ++i) rgph[i].clear();
+		hp.cnt = 1;
 	}
 	void add_edge(int u, int v, int x)
 	{
 		gph[u].push_back({v, x});
 		rgph[v].push_back({u, x});
 	}
-	//return -1 if there is no such walk
+	// return -1 if there is no such walk
+	// every weight must be positive
 	vector<ll> kth_path(int s, int e, int K)
 	{
 		int nxt[n];
