@@ -66,7 +66,7 @@ void dfs2(int now, int col) {
 void get_bcc() {
   for (int i = 1; i <= N; i++) if (!dfn[i]) dfs(i, i);
   for (int i = 1; i <= N; i++) if (!vis[i]) dfs2(i, 0);
-  // Uncomment this if isolated vertices also form a bcc
+  // Comment this if isolated vertices does not form a bcc
   for (int i = 1; i <= N; i++) if (adj[i].empty()) {
     bcnt++;
     color[i].push_back(bcnt);
