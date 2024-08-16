@@ -1,19 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// computes the eertree of a string
-// each node corresponds to a palindrome substring of S
-// 
+// 0-based, O(26 N)
+// nd[x].pos - nd[x].len + 1 ~ nd[x].pos is palindrome for node x 
 // nd[S].chd[c] represents the string cSc
 // nd[S].link represents the longest palindromic suffix of S
 namespace eertree {
 	const int SZ = 1010101;
 	const int CH = 26;
 	struct node {
-		int link, len, par;
+		int link, len, par, pos;
 		vector<int> chd;
 		node() {
-			link = len = par = 0;
+			link = len = par = pos = 0;
 			chd = vector<int>(CH, 1);
 		}
 	};
@@ -43,6 +42,7 @@ namespace eertree {
 				nd[r].link = nd[v].chd[c];
 				nd[x].chd[c] = r;
 				nd[r].par = x;
+				nd[r].pos = i;
 			}
 			x = nd[x].chd[c];
 			suf[i] = x;
