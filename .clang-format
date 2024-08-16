@@ -1,0 +1,11 @@
+﻿---
+BasedOnStyle: Google
+AllowShortBlocksOnASingleLine: 'true'
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: 'true'
+ColumnLimit: '0'
+FixNamespaceComments: 'false'
+Language: Cpp
+...

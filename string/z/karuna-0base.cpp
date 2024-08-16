@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Z[i] = LCP(S[i...], S)
+// get_z(S = "ababacaca") = [-, 0, 3, 0, 1, 0, 1, 0, 1]
 vector<int> get_z(string S) {
 	int n = S.size();
 	vector<int> a(n);
