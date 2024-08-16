@@ -1,3 +1,10 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+
 const int SV = 101010;
 typedef long long T;
 namespace spfa
@@ -5,7 +12,7 @@ namespace spfa
 	// INF should be larger than E|X|
 	const T INF = (T)1e18 + 100;
 	int n;
-	vector<pii> gph[SV];
+	vector<pair<int, T>> gph[SV];
 	T dist[SV];
 	int par[SV], in[SV];
 	bool inq[SV];
@@ -13,7 +20,7 @@ namespace spfa
 		n = _n;
 		for(int i = 1; i <= n; ++i) gph[i].clear();
 	}
-	void add_edge(int u, int v, int w) { gph[u].push_back({v, w}); }
+	void add_edge(int u, int v, T w) { gph[u].push_back({v, w}); }
 	bool is_cycle() {
 		fill(in + 1, in + n + 1, 0);
 		for(int i = 1; i <= n; ++i) if(par[i] != 0) ++in[par[i]];
@@ -33,9 +40,18 @@ namespace spfa
 		fill(par + 1, par + n + 1, 0);
 		fill(inq + 1, inq + n + 1, false);
 		deque<int> Q;
-		dist[s] = 0;
-		inq[s] = true;
-		Q.push_back(s);
+        if(s==-1) {
+            for(int i=1; i<=n; i++) {
+                dist[i]=0;
+                inq[i]=true;
+                Q.push_back(i);
+            }
+        }
+        else {
+            dist[s] = 0;
+            inq[s] = true;
+            Q.push_back(s);
+        }
 		int cnt = 0;
 		while(Q.size()) {
 			int x = Q.front(); Q.pop_front();
@@ -56,4 +72,32 @@ namespace spfa
 		}
 		return true;
 	}
+}
+
+int main()
+{
+    int TC;
+    scanf("%d", &TC);
+    while(TC--)
+    {
+        int N, M, K;
+        scanf("%d%d%d", &N, &M, &K);
+        spfa::init(N);
+        ll x=1e9;
+        for(int i=1; i<=M; i++)
+        {
+            int u, v, w;
+            scanf("%d%d%d", &u, &v, &w);
+            spfa::add_edge(u, v, w*x);
+            spfa::add_edge(v, u, w*x);
+        }
+        for(int i=1; i<=K; i++)
+        {
+            int u, v, w;
+            scanf("%d%d%d", &u, &v, &w);
+            spfa::add_edge(u, v, -w*x);
+        }
+        if(spfa::shortest_path(-1)) printf("NO\n");
+        else printf("YES\n");
+    }
 }

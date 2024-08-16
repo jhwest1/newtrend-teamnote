@@ -18,3 +18,10 @@
 - string/suffix-array/final.cpp
 - string/eertree/final.cpp
 - string/duval/final.cpp
+
+- graph/spfa/final.cpp
+- graph/tree-isomorphism/final.cpp
+- graph/dominator-tree/final.cpp
+- graph/count-3-4-cycles/final.cpp
+- graph/blossom/final.cpp
+- graph/bcc/final.cpp
