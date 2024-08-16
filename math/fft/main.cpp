@@ -1,7 +1,7 @@
 typedef complex<double> cpx;
 typedef __int128 dll;
 
-const double pi = acos(-1);
+const double pi = acos((double)(-1));
 // D^2 < |X|
 const int D = 32000;
 

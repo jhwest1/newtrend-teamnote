@@ -24,3 +24,7 @@
 - graph/count-3-4-cycles/final.cpp
 - graph/blossom/final.cpp
 - graph/bcc/final.cpp
+- math/ultimate-mod/final.cpp
+- math/pollard-rho/final.cpp
+- math/ext_euclid/final.cpp
+- math/tonelli-shanks/final.cpp
