@@ -157,7 +157,7 @@ struct MinCostCirculation {
         T eps = 0;
         for(auto &i : estk){
             T curFlow;
-            if(i.s != i.e) curFlow = i.r - circ.mf.gph[i.s][ptr[i.s]].c; // gph : name of adjacency list in max flow
+            if(i.s != i.e) curFlow = i.r - circ.mf.gph[i.s][ptr[i.s]].c;
             else curFlow = i.r;
             int srev = gph[i.e].size();
             int erev = gph[i.s].size();

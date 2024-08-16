@@ -28,3 +28,12 @@
 - math/pollard-rho/final.cpp
 - math/ext_euclid/final.cpp
 - math/tonelli-shanks/final.cpp
+- flow/dinic/final.cpp
+- flow/dinic/note.txt
+- flow/hlpp/final.cpp
+- flow/hopcroft-karp/final.cpp
+- flow/hungarian/final.cpp
+- flow/cost-scaling/final.cpp
+- flow/global-min-cut/final.cpp
+- flow/gomory-hu/final.cpp
+- flow/simplex/final.cpp
