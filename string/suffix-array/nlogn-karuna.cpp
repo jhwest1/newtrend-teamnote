@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 0-based, O(n log n)
+// S   = "abcababc"
+// sa  = [ 3, 5, 0, 4, 6, 1, 7, 2 ]
+// lcp = [ -, 2, 3, 0, 1, 2, 0, 1 ]
 void suffix_array(string S, vector<int> &sa, vector<int> &lcp) {
 	int n = S.size();
 	vector<int> r(n), k(n), cnt(n), ord(n);
