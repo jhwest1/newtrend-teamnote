@@ -1,4 +1,4 @@
-// 0-based, O(|S| + \sum|T_i|)
+// 0-based, O(|S| + 26 * \sum|T_i|)
 // v.fail = failure link of node v
 // v.suf = longest suffix of node v corresponding to whole inserted string (if none, root)
 // v.chd[c] = c-th children of node v in trie

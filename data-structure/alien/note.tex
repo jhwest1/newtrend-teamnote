@@ -1,0 +1,14 @@
+$$dp[i][k] = min_{j<i} (dp[j][k-1] + cost(j, i))$$
+
+위와 같은 형태의 점화식에서 $cost(j, i)$가 monge 하고, $K$가 주어질 때 $dp[N][K]$를 구하고, 실제 최적해를 역추적한다.
+
+$$dp2[i] = min_{j<i} (dp2[j] + cost(j, i)) - \lambda$$
+
+$f(k) = dp[N][k]$라 정의하자.
+적당한 $\lambda$에 대하여 $p=f(k)-\lambda k$를 최적화한다.
+$f(k)=p + \lambda k$이니, $(x, f(x))$를 선으로 이은 그래프에서 기울기 $\lambda$의 접선을 그었을 때의 $y$좌표가 최적의 $p$가 된다.
+$p=f(k)-\lambda k$는 고정된 $\lambda$에 대하여 최적의 $dp2[N]$을 의미한다.
+
+min/max에 따라 $k$가 증가/감소하면 $\lambda$가 증가/감소한다.
+정해진 $\lambda$를 이용하여 $dp2[N]$을 구하고, 이 때 사용한 transition의 개수를 주어진 $K$와 비교하여 $\lambda$를 반정수 범위에서 이분탐색한다.
+구한 $\lambda$에 대하여 $dp2[N]+\lambda K$가 답이다.
