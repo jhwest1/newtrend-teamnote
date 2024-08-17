@@ -15,15 +15,16 @@ using namespace std;
 
 
 // no loop, 2-vertex-connected: only first ear is cycle, 2-edge-connected: every ear can be cycle.
-// call init() first, add_edge(x, y), then ear_decomposition()
+// call init(|V|, |E|) first, add_edge(x, y), then ear_decomposition()
 // vear: vertex list of ear / ear : edge list of ear
 // path: vear = {1, 2, 3}, ear = {{1, 2}, {2, 3}}
 // cycle: vear = {1, 2, 3, 1}, ear = {{1, 2}, {2, 3}, {3, 1}}
-const int SV = 101010;
-int n, cnt = 0, ord[SV], rev[SV]; bool chc[SV]; pii par[SV]; vector<pii> gph[SV]; vector<vector<int>> vear, ear;
-void init(int _n) {
+const int SV = 101010, SE = 1010101;
+int n, cnt = 0, ord[SV], rev[SV]; bool chc[SE]; pii par[SV]; vector<pii> gph[SV]; vector<vector<int>> vear, ear;
+void init(int _n, int _m) {
 	n = _n;
-	for(int i = 0; i <= n; ++i) gph[i].clear(), chc[i] = false, ord[i] = 0, rev[i] = 0, par[i] = {0, 0};
+	for(int i = 0; i <= _n; ++i) gph[i].clear(), ord[i] = 0, rev[i] = 0, par[i] = {0, 0};
+	for(int i = 0; i <= _m; ++i) chc[i] = false;
 	vear.clear(); ear.clear();
 	cnt = 0;
 }
@@ -44,9 +45,9 @@ void ear_decomposition() {
 		for(auto [y, e] : gph[x]) if(ord[y] > ord[x] && par[y].ff != x) {
 			vector<int> V{x, y};
 			vector<int> E{e};
-			chc[x] = true;
-			while(!chc[y]) {
-				chc[y] = true;
+			chc[e] = true;
+			while(!chc[par[y].ss] && y != x) {
+				chc[par[y].ss] = true;
 				V.push_back(par[y].ff);
 				E.push_back(par[y].ss);
 				y = par[y].ff;
@@ -62,18 +63,16 @@ void ear_decomposition() {
 
 mt19937 rnd(1557);
 int rng(int l, int r) { return uniform_int_distribution<int>(l, r)(rnd); }
-map<pii, int> M;
+pii M[SE];
 void gen_gph(int m)
 {
-	M.clear();
 	for(int i = 1; i <= m; ++i)
 	{
 		int x = rng(1, n);
 		int y = rng(1, n);
-		if(x == y || M.count({x, y})) {--i; continue;}
+		if(x == y) {--i; continue;}
 		add_edge(x, y, i);
-		M[{x, y}] = i;
-		M[{y, x}] = i;
+		M[i] = {x, y};
 	}
 }
 
@@ -128,8 +127,7 @@ void gen_gph(int m)
 // 			used[v[i]] = true;
 // 			if(i != 0)
 // 			{
-// 				if(M[{v[i - 1], v[i]}] != e[i - 1]) return false;
-// 				M[{v[i - 1], v[i]}] = M[{v[i], v[i - 1]}] = -1;
+// 				if(M[e[i - 1]] != pii{v[i - 1], v[i]} && M[e[i - 1]] != pii{v[i], v[i - 1]}) return false;
 // 			}
 // 		}
 // 	}
@@ -183,8 +181,7 @@ bool check()
 			used[v[i]] = true;
 			if(i != 0)
 			{
-				if(M[{v[i - 1], v[i]}] != e[i - 1]) return false;
-				M[{v[i - 1], v[i]}] = M[{v[i], v[i - 1]}] = -1;
+				if(M[e[i - 1]] != pii{v[i - 1], v[i]} && M[e[i - 1]] != pii{v[i], v[i - 1]}) return false;
 			}
 		}
 	}
@@ -200,8 +197,8 @@ int main()
 	int c = 0;
 	while(c <= 1'000'000)
 	{
-		init(n);
-		gen_gph(c += 1000);
+		init(n, c += 1000);
+		gen_gph(c);
 		if(_2_con_check())
 		{
 			ear_decomposition();
@@ -214,9 +211,7 @@ int main()
 			{
 				cout << "error!" << endl;
 				cout << "graph:" << endl;
-				pii edge[c + 1];
-				for(auto [x, y] : M) edge[y] = x;
-				for(int i = 1; i <= c; ++i) cout << edge[i].ff << ' ' << edge[i].ss << endl;
+				for(int i = 1; i <= c; ++i) cout << M[i].ff << ' ' << M[i].ss << endl;
 				cout << "output:" << endl;
 				for(int i = 0; i < (int)vear.size(); ++i)
 				{
