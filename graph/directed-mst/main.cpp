@@ -1,17 +1,32 @@
-// call dmst(n, r, E); where E is the edge list of the graph
-// return the cost of r-rooted mst, and parent of each node
-// nodes are 0-based
+#include <bits/stdc++.h>
+#define pii pair<int, int>
+#define pll pair<long long, long long>
+#define piii pair<int, pii>
+#define plll pair<long long, pll>
+#define tiii array<int, 3>
+#define tiiii array<int, 4>
+#define ff first
+#define ss second
+#define ee ss.ff
+#define rr ss.ss
+typedef long long ll;
+typedef long double ld;
+using namespace std;
 
-struct UF1
-{
+// call dmst(n, r, E); where E is the edge list of the graph
+// return the cost of r-rooted mst, and parent of each node (r itself for parent of r)
+// all nodes should be reachable from r. dmst() doesn't check about it :<
+// ALERT: NODES ARE 0-BASED!!!!!!!!
+typedef long long T;
+typedef pair<T, T> ptt;
+struct UF1 {
 	int n;
 	vector<int> par;
 	UF1(int n) : n(n), par(n) { iota(par.begin(), par.end(), 0); }
 	int fnd(int x) { return par[x] == x ? x : par[x] = fnd(par[x]); }
 	bool uni(int x, int y) { x = fnd(x), y = fnd(y); if(x == y) return false; par[x] = y; return true; }
 };
-struct UF2
-{
+struct UF2 {
 	int n;
 	vector<int> par;
 	vector<pii> his;
@@ -19,16 +34,15 @@ struct UF2
 	int fnd(int x) { return par[x] == x ? x : (his.push_back({x, par[x]}), par[x] = fnd(par[x])); }
 	void uni(int x, int y) { x = fnd(x), y = fnd(y); his.push_back({x, par[x]}); par[x] = y; }
 };
-struct Edge{int u, v, w;};
-
-pair<long long, vector<int>> dmst(int n, int r, vector<Edge> E) {
+struct Edge{int u, v; T w;};
+pair<T, vector<int>> dmst(int n, int r, vector<Edge> E) {
 	int m = E.size();
-	vector<priority_queue<pll, vector<pll>, greater<pll>>> Q(n);
-	vector<long long> L(n);
+	vector<priority_queue<ptt, vector<ptt>, greater<ptt>>> Q(n);
+	vector<T> L(n);
 	for(int i = 0; i < (int)E.size(); ++i) Q[E[i].v].push({ E[i].w, i });
-	long long wgh = 0;
+	T wgh = 0;
 	UF1 uf1(n + m); UF2 uf2(n + m);
-	vector<pll> P(n, {-1, -1});
+	vector<ptt> P(n, {-1, -1});
 	vector<int> R;
 	queue<int> V;
 	for(int i = 0; i < n; ++i) if(i != r) V.push(i);
@@ -70,4 +84,23 @@ pair<long long, vector<int>> dmst(int n, int r, vector<Edge> E) {
 	vector<int> ret(n);
 	for(int i = 0; i < n; ++i) ret[i] = (P[i].ff == -1 ? i : E[P[i].ff].u);
 	return {wgh, ret};
+}
+
+
+// https://judge.yosupo.jp/problem/directedmst
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+
+	int n, m, r; cin >> n >> m >> r;
+	vector<Edge> E;
+	for(int i = 0; i < m; ++i)
+	{
+		int x, y, v; cin >> x >> y >> v;
+		E.push_back({x, y, v});
+	}
+	auto [wgh, ret] = dmst(n, r, E);
+	cout << wgh << '\n';
+	for(int i = 0; i < n; ++i) cout << ret[i] << ' ';
 }
