@@ -1,10 +1,6 @@
-struct point { int x, y; };
-point operator-(point a, point b) { return {a.x - b.x, a.y - b.y}; }
-point operator+(point a, point b) { return {a.x + b.x, a.y + b.y}; }
-ll operator*(point a, point b) { return 1ll * a.x * b.x + 1ll * a.y * b.y; }
-ll operator/(point a, point b) { return 1ll * a.x * b.y - 1ll * a.y * b.x; }
 typedef __int128_t dll;
 
+/* include 4 basic operators from int template */
 // 0-based, O(n log n), coordinates less than 10^12
 const int INF = 1e6 + 10; // 좌표범위보다 크게
 struct line { point s, d;	};
