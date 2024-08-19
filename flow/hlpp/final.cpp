@@ -3,7 +3,6 @@
 struct HLPP {
   typedef long long T;
   const static int SV = 1200;
-  
   struct edge { int y; T c; int r; };
   int n;
   vector<edge> gph[SV];

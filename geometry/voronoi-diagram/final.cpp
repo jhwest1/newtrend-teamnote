@@ -1,14 +1,6 @@
 const double eps = 1e-9;
-struct point { double x, y; };
-point operator+(point a, point b) { return {a.x + b.x, a.y + b.y}; }
-point operator-(point a, point b) { return {a.x - b.x, a.y - b.y}; }
-double operator*(point a, point b) { return a.x * b.x + a.y * b.y; }
-double operator/(point a, point b) { return a.x * b.y - a.y * b.x; }
-point operator*(double k, point a) { return {k * a.x, k * a.y}; }
-
+/* include 5 basic operators, intersect from double template */
 point rot(point p) { return {-p.y, p.x}; }
-point intersect(point a, point b, point u, point v) { return u + (((a - u) / b) / (v / b)) * v; }
-
 namespace voronoi {
   int dcmp(double x) { return x < -eps ? -1 : x > eps ? 1 : 0; }
   double pb_int(point l, point r, double sweepline) {
