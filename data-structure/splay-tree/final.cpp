@@ -1,12 +1,10 @@
 struct Node {
   int sz;
   int par, lc, rc;
-
   // val : value stored in node, sum : query value stored in node
   // lazy : lazy value to be applied to subtree of node (already applied to val, sum)
   ll val, sum;
   ll lazy;
-
   Node(ll x) {
     sz = 1;
     par = lc = rc = 0;
@@ -20,15 +18,12 @@ struct Node {
     lazy = 0;
   }
 };
-
 struct SplayTree {
   SplayTree() { NS = vector<Node>(1); root = 0; }
   int newNode(ll x) { NS.push_back(Node(x)); return NS.size() - 1; }
-
   // NS[0] : NIL node
   int root;
   vector<Node> NS;
-
   void recalc(int node) {
     if (node == 0) return;
     int l = NS[node].lc, r = NS[node].rc;
@@ -56,7 +51,6 @@ struct SplayTree {
     if (NS[x].par != 0) prop_anc(NS[x].par);
     prop(x);
   }
-
   // Rotate x with its parent
   void rotate(int x) {
     assert(x != 0 && NS[x].par != 0);
@@ -79,7 +73,6 @@ struct SplayTree {
     recalc(p);
     recalc(x);
   }
-
   // Make x the root of tree
   // ammortized O(logN), should be called after consuming time to visit any internal node
   void splay(int x) {
@@ -92,7 +85,6 @@ struct SplayTree {
       rotate(x);
     }
   }
-
   // Find kth node in subtree of node
   int find_kth(int node, int k) {
     assert(1 <= k && k <= NS[node].sz);
@@ -103,13 +95,11 @@ struct SplayTree {
   }
   // Find kth node of the tree, and make it root
   void find_kth(int k) { splay(find_kth(root, k)); }
-
   // Insert node x after the kth node in subtree of node
   void insert(int node, int k, int x) {
     if (node == 0) return;
     assert(0 <= k && k <= NS[node].sz);
     prop(node);
-
     if (k <= NS[NS[node].lc].sz) {
       if (NS[node].lc == 0) {
         NS[node].lc = x;
@@ -128,12 +118,10 @@ struct SplayTree {
   }
   // Insert node x after the kth node of tree, and make it root
   void insert(int k, int x) { insert(root, k, x); splay(x); }
-
   // Erase root of tree
   void erase() {
     assert(root != 0);
     prop(root);
-
     int p = NS[root].lc, q = NS[root].rc;
     if (p == 0 || q == 0) {
       root = p + q;
@@ -147,25 +135,21 @@ struct SplayTree {
     NS[q].par = root;
     recalc(root);
   }
-
   // Merge [l, r]th nodes into a subtree (maybe NS[NS[root].lc].rc), and return it
   int interval(int l, int r) {
     assert(1 <= l && r <= NS[root].sz);
     int sz = NS[root].sz, ret, x;
-
     if (r < sz) {
       find_kth(r + 1);
       x = root;
       root = NS[x].lc;
       NS[root].par = 0;
     }
-
     if (l > 1) {
       find_kth(l - 1);
       ret = NS[root].rc;
     }
     else ret = root;
-
     if (r < sz) {
       NS[root].par = x;
       NS[x].lc = root;
@@ -173,7 +157,6 @@ struct SplayTree {
     }
     return ret;
   }
-
   // Update val to range [l, r]
   void update(int l, int r, ll lazy) {
     assert(1 <= l && r <= NS[root].sz);
@@ -182,7 +165,6 @@ struct SplayTree {
     recalc(NS[p].par);
     recalc(NS[NS[p].par].par);
   }
-
   // Query range [l, r]
   Node query(int l, int r) {
     assert(1 <= l && r <= NS[root].sz);
