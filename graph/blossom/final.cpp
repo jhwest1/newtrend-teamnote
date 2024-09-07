@@ -30,8 +30,7 @@ int lca(int x, int y) {
 }
 void blossom(int x, int y, int z) {
   while (org[x] != z) {
-    par[x] = y;
-    y = match[x];
+    par[x] = y; y = match[x];
     if (vis[y] == 1) {
       vis[y] = 0;
       S.push_back(y);
@@ -42,36 +41,29 @@ void blossom(int x, int y, int z) {
 }
 void augment(int x) {
   while (x) {
-    int px = par[x];
-    int nx = match[px];
-    match[x] = px;
-    match[px] = x;
+    int px = par[x], nx = match[px];
+    match[x] = px; match[px] = x;
     x = nx;
   }
 }
 bool bfs(int s) {
   for (int i = 1; i <= n; i++) vis[i] = -1, org[i] = i;
-  S.clear();
-  S.push_back(s);
+  S.clear(); S.push_back(s);
   vis[s] = 0;
   while (!S.empty()) {
-    int v = S.back();
-    S.pop_back();
+    int v = S.back(); S.pop_back();
     for (int x : gph[v]) {
       if (vis[x] == -1) {
-        vis[x] = 1;
-        par[x] = v;
+        vis[x] = 1; par[x] = v;
         if (!match[x]) {
-          augment(x);
-          return true;
+          augment(x); return true;
         }
         vis[match[x]] = 0;
         S.push_back(match[x]);
       }
 	  else if (vis[x] == 0 && org[x] != org[v]) {
         int z = lca(org[x], org[v]);
-        blossom(v, x, z);
-        blossom(x, v, z);
+        blossom(v, x, z); blossom(x, v, z);
       }
     }
   }
