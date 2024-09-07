@@ -4,7 +4,6 @@ struct Line {
   bool operator<(const Line& o) const { return a != o.a ? o.a < a : b < o.b; }  // min : < , max : > (both)
   bool operator<(ll x) const { return p < x; }
 };
-
 // LineContainer::LineContainer cht;
 // multiset of Line, sorted in increasing order of cross points
 struct LineContainer : multiset<Line, less<>> {

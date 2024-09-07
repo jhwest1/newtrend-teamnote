@@ -1,3 +1,5 @@
+// Include any max flow algorithm here
+
 // 0-based
 // call init() first, add_edge(u, v, l, r), then flow(src, snk)
 // gets maximum flow for given LR-flow graph
@@ -48,7 +50,6 @@ struct MinCostCirculation {
   typedef long long T;
   const int SCALE = 3;  // scale by 1/(1 << SCALE)
   const T INF = numeric_limits<T>::max() / 2;
-
   struct EdgeStack {
     int s, e;
     T l, r, cost;
@@ -57,13 +58,11 @@ struct MinCostCirculation {
     int pos, rev;
     T rem, cap, cost;
   };
-
   int n;
   vector<EdgeStack> estk;
   Circulation circ;
   vector<vector<Edge>> gph;
   vector<T> p;
-
   void init(int k) {
     n = k;
     circ.init(n);
@@ -76,7 +75,6 @@ struct MinCostCirculation {
   pair<bool, T> solve() {
     for (auto &i : estk) if (i.s != i.e) circ.add_edge(i.s, i.e, i.l, i.r);
     if (!circ.flow(-1, -1)) return make_pair(false, T(0));
-
     vector<int> ptr(n);
     T eps = 0;
     for (auto &i : estk) {

@@ -1,15 +1,12 @@
 mt19937 rng(1557);
 int rnd() { return uniform_int_distribution<int>()(rng); }
-
 struct Node {
   int pr, sz;
   int par, lc, rc;
-
   // val : value stored in node, sum : query value of subtree
   // lazy : lazy value to be applied to subtree of node (already applied to val, sum)
   ll val, sum;
   ll lazy;
-
   Node(ll x) {
     pr = rnd();
     sz = 1;
@@ -18,7 +15,6 @@ struct Node {
     val = sum = x;
     lazy = 0;
   }
-
   Node() {
     pr = sz = par = lc = rc = 0;
     val = sum = 0;
@@ -29,11 +25,9 @@ struct Node {
 struct Treap {
   Treap() { NS = vector<Node>(1); root = 0; }
   int newNode(ll x) { NS.push_back(Node(x)); return NS.size() - 1; }
-
   // NS[0] : NIL node
   int root;
   vector<Node> NS;
-
   void recalc(int node) {
     if (node == 0) return;
     int l = NS[node].lc, r = NS[node].rc;
@@ -56,7 +50,6 @@ struct Treap {
     // your code goes here
     NS[node].lazy = 0;
   }
-
   // Merge two consecutive trees rooted at l, r
   int merge(int l, int r) {
     if (l == 0 || r == 0) return l + r;
@@ -77,7 +70,6 @@ struct Treap {
       return r;
     }
   }
-
   // Split tree rooted at node into two trees of size k, sz-k
   pii split(int node, int k) {
     if (node == 0) return {0, 0};
@@ -101,9 +93,7 @@ struct Treap {
       return {node, r};
     }
   }
-
   // ================================ Essential functions ENDS here ================================
-
   // Find kth node in subtree of node
   int find_kth(int node, int k) {
     prop(node);
@@ -113,7 +103,6 @@ struct Treap {
   }
   // Find kth node of the tree
   int find_kth(int k) { return find_kth(root, k); }
-
   // Insert node x after the kth node of tree
   void insert(int k, int x) {
     assert(0 <= k && k <= NS[root].sz);
@@ -121,7 +110,6 @@ struct Treap {
     root = merge(a, x);
     root = merge(root, b);
   }
-
   // Erase kth node of tree
   void erase(int k) {
     assert(1 <= k && k <= NS[root].sz);
@@ -129,7 +117,6 @@ struct Treap {
     auto [b, c] = split(d, 1);
     root = merge(a, c);
   }
-
   // Update val to range [l, r]
   void update(int l, int r, ll val) {
     auto [d, c] = split(root, r);
@@ -138,7 +125,6 @@ struct Treap {
     root = merge(a, b);
     root = merge(root, c);
   }
-
   // Query range [l, r]
   Node query(int l, int r) {
     auto [d, c] = split(root, r);

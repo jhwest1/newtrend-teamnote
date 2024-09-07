@@ -1,6 +1,5 @@
 const int MAXN = 5e5;
 int N;
-
 // dp[i] : optimal dp value of i
 // cnt[i] : how much transitions were used in optimal dp[i]
 // memo[i] : previous transition position from i
@@ -8,9 +7,7 @@ int N;
 ll dp[MAXN + 10];
 int cnt[MAXN + 10], memo[MAXN + 10];
 vector<int> V;
-
 void init(int _N) { N = _N; }
-
 // For given lambda, calculate dp, cnt, memo, V
 // dp[i] = min(or max)_{j<i} (dp[j] + cost(j, i)*2 - lambda)
 // changes dp, cnt, memo, V
@@ -18,7 +15,6 @@ void solve(ll lambda) {
   // initialize dp, cnt, memo, V, (other data structures)
   for (int i = 0; i <= N; i++) dp[i] = cnt[i] = memo[i] = 0;
   V.clear();
-
   for (int i = 1; i <= N; i++) {
     // get_opt(i), cost(p, q) must be implemented
     // opt = argmin(or max)_{j<i} (dp[j] + cost(j, i)*2)
@@ -28,7 +24,6 @@ void solve(ll lambda) {
     cnt[i] = cnt[opt] + 1;
     memo[i] = opt;
   }
-
   for (int i = N; i > 0;) {
     V.push_back(i);
     i = memo[i];
@@ -36,7 +31,6 @@ void solve(ll lambda) {
   V.push_back(0);
   reverse(V.begin(), V.end());
 }
-
 // Get optimal dp[N][K] for given K
 // Returns (answer, restored solution)
 // dp[i][k] = min(or max)_{j<i} (dp[j][k-1] + cost(j, i))
@@ -44,7 +38,6 @@ pair<ll, vector<int>> alien(int K) {
   // lambda equals slope
   // minimum : K increase, lambda increase
   // maximum : K increase, lambda decrease
-
   ll lo = -1e18, hi = 1e18;  // range for lambda is [2*lo+1, 2*hi+1]
   while (lo + 1 < hi) {
     ll mid = lo + hi >> 1;
@@ -52,12 +45,10 @@ pair<ll, vector<int>> alien(int K) {
     if (K <= cnt[N]) hi = mid;  // min : <= , max : >=
     else lo = mid;
   }
-
   vector<int> P1, P2, ansV;
   solve(2 * lo + 1); P1 = V;
   solve(2 * hi + 1); P2 = V;
   if (P1.size() > P2.size()) swap(P1, P2);
-
   if (P1.size() - 1 == K) ansV = P1;
   else if (P2.size() - 1 == K) ansV = P2;
   else {
