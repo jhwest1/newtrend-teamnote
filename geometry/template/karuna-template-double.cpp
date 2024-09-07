@@ -31,11 +31,11 @@ int line_intersect_verbose(point p, point q, point r, point s, point &a, point &
     if (u > v) swap(u, v);
     // intersection of [0, l] and [u, v]
     // (u의 scale) * (자료형의 상대오차 정밀도)가 eps보다 작도록.
-    // (좌표의 차이) * (벡터의 크기) 가 eps보다 크도록.
+    // (좌표의 차이) * (선분의 길이) 가 eps보다 크도록.
     if (l < u - eps || 0 > v + eps) return 0;
     else if (abs(u - l) < eps) { a = p; return 1; } 
-	else if (abs(0 - v) < eps) { a = q; return 1; } 
-	else {
+	  else if (abs(0 - v) < eps) { a = q; return 1; } 
+	  else {
       a = p + (max(0.0, u) / l) * (q - p);
       b = p + (min(l, v) / l) * (q - p);
       return 3;
