@@ -1,35 +1,20 @@
 // include 4 basic operators, ccw, point_on_line from int template
 
-// call init() first, then after adding points, call convex_hull()
-// need not call convex_hull() if P is guaranteed to be convex and no 3 collinear points
+// call init() first, then call add_point()
+// P should be a convex polygon, counterclokwise, no colinear, at least three points
+
 // point_in_polygon(p) tests if p is strictly contained in the interior of P
 // tangent(p, dir) returns -1 if p is strictly inside
 // otherwise, returns the vertex number v
 // P[v] is the nearest point encountered on the tangent (half)line
+
+// dir = 0 (clockwise), dir = 1 (counterclockwise)
+// 다각형 반대방향으로 반직선을 긋고 그 방향으로 돌릴 때 처음으로 만나는 점
 struct convex_polygon {
   int n;
   vector<point> P;
   void init() { n = 0; P.clear(); }
   void add_point(point p) { ++n; P.push_back(p); }
-  void convex_hull() {
-    // MUST remove duplicate points if exists
-    int n = P.size();
-    for (int i = 1; i < n; i++) {
-      if (P[i].x < P[0].x || (P[i].x == P[0].x && P[i].y < P[0].y)) swap(P[0], P[i]);
-    }
-    sort(P.begin() + 1, P.end(), [&](point p, point q) {
-      int k = ccw(P[0], p, q);
-      return k == 0 ? (P[0] - p) * (P[0] - p) < (P[0] - q) * (P[0] - q) : k > 0;
-    });
-    vector<point> C;
-    for (int i = 0; i < n; i++) {
-      while (C.size() > 1 && ccw(C[C.size() - 2], C.back(), P[i]) <= 0) C.pop_back();
-      C.push_back(P[i]);
-    }
-    P = C;
-    n = P.size();
-  }
-
   bool sgn(point p) {
     int k = ccw(P[n - 1], P[0], p);
     return k == 0 ? (P[n - 1] - P[0]) * (p - P[0]) >= 0 : k > 0;
@@ -56,7 +41,7 @@ struct convex_polygon {
     }
     else return ccw(P[k - 1], P[k], p) > 0;
   }
-  int tangent(point p, bool dir) { // dir = 1 is counterclockwise
+  int tangent(point p, bool dir) {
     if (point_in_polygon(p)) {
       return -1;
     }
