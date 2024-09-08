@@ -1,7 +1,6 @@
 // call isPrime(n) for primality test : O(log n)
 // call factorize(n) for factorization : O(n^{1/4} log n)
 // result of factorize(n) may NOT be sorted
-typedef long long ll;
 typedef unsigned long long ull;
 ull modmul(ull a, ull b, ull M) {
   ll ret = a * b - M * ull(1.L / M * a * b);
