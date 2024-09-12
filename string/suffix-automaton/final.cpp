@@ -59,7 +59,7 @@ void suffix_tree(string S) {
   build(S);
   reverse(S.begin(), S.end());
   int n = nd.size();
-  g.resize(n);
+  g.clear(); g.resize(n);
   for (int v = 0; v < n; v++) nd[v].pos = (int)S.size() - 1 - nd[v].pos;
   for (int v = 1; v < n; v++) {
     int x = nd[v].link;
@@ -67,9 +67,7 @@ void suffix_tree(string S) {
     int r = nd[v].pos + nd[v].len - 1;
     g[x].push_back({v, l, r});
   }
-  for (int v = 0; v < n; v++) {
-    sort(g[v].begin(), g[v].end(), [&](edge e, edge f) { return S[e.l] < S[f.l]; });
-  }
+  for (int v = 0; v < n; v++) sort(g[v].begin(), g[v].end(), [&](edge e, edge f) { return S[e.l] < S[f.l]; });
 }
 void dfs(int v, vector<int> &sa) {
   if (nd[v].flag) sa.push_back(nd[v].pos);
