@@ -73,6 +73,21 @@ vector<T> kth_walk(int s, int e, int K) {
 		top.push_back(x);
 		for(auto [y, c] : rgph[x]) if(!vst[y] && dst[y] > d + c) dst[y] = d + c, Q.push({d + c, y, x});
 	}
+	// if there is negative edge
+	// nxt[e] = -1;
+	// for(int t = 0; t < n; ++t) {
+	// 	for(int x = 0; x < n; ++x) for(auto [y, c] : rgph[x]) if(dst[y] > dst[x] + c)
+	// 		dst[y] = dst[x] + c, nxt[y] = x;
+	// }
+	// // OR use SPFA
+	// vector<int> ls[n];
+	// for(int i = 0; i < n; ++i) if(nxt[i] != -1) ls[nxt[i]].push_back(i);
+	// queue<int> Q; Q.push(e);
+	// while(Q.size()) {
+	// 	int x = Q.front(); Q.pop();
+	// 	top.push_back(x);
+	// 	for(auto y : ls[x]) Q.push(y);
+	// }
 	if(dst[s] >= INF) return vector<T>();
 	bool chc[n]{};
 	int rt[n]{};
