@@ -5,9 +5,11 @@
 // v.chd[c] = c-th children node of v in suffix automaton
 // e.x = child node of edge e in suffix tree
 // [e.l, e.r] = substring of S corresponding to edge e in suffix tree
+// v.flag = true if v corresponds exactly to suffix (v.pos)
 // call init() first, and build suffix automaton by calling build(S)
 // call init() first, and build suffix tree by calling suffix_tree(S)
 // all nodes in nd are used in both suffix automaton and suffix tree
+// nodes in suffix tree CAN have ONE child
 const int CH = 26;
 struct node {
   int link, len, pos;
