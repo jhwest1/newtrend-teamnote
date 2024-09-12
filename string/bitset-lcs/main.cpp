@@ -6,13 +6,11 @@ using ull = unsigned long long;
 int lcs(string A, string B) {
   int N = A.size(), M = B.size();
   int sz = (M >> 6) + 1;
-
   vector<ull> S[256];
   for(int c = 0; c < 256; c++) S[c].resize(sz);
   for(int j = 0; j < M; j++) set(S[B[j]], j);  
   vector<ull> row(sz);
   for(int j = 0; j < M; j++) if(A[0] == B[j]) { set(row, j); break; }
-
   for(int i = 1; i < N; i++) {
     ull shl_carry = 1;
     ull minus_carry = 0;

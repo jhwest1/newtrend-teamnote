@@ -12,8 +12,10 @@ const int CH = 26;
 struct node {
   int link, len, pos;
   vector<int> chd;
+  bool flag;
   node() {
     link = len = pos = 0;
+    flag = false;
     chd = vector<int>(CH);
   }
 };
@@ -32,6 +34,7 @@ void build(string S) {
     int cur = new_node();
     nd[cur].len = nd[prv].len + 1;
     nd[cur].pos = i;
+    nd[cur].flag = true;
     for (; prv != -1 && !nd[prv].chd[c]; prv = nd[prv].link) nd[prv].chd[c] = cur;
     if (prv != -1) {
       int x = nd[prv].chd[c];
@@ -65,8 +68,24 @@ void suffix_tree(string S) {
     g[x].push_back({v, l, r});
   }
   for (int v = 0; v < n; v++) {
-    sort(g[v].begin(), g[v].end(), [&](edge e, edge f) {
-      return S[e.l] < S[f.l];
-    });
+    sort(g[v].begin(), g[v].end(), [&](edge e, edge f) { return S[e.l] < S[f.l]; });
+  }
+}
+void dfs(int v, vector<int> &sa) {
+  if (nd[v].flag) sa.push_back(nd[v].pos);
+  for (auto [x, l, r] : g[v]) dfs(x, sa);
+}
+void suffix_array(string S, vector<int> &sa, vector<int> &lcp) {
+  suffix_tree(S);
+  dfs(0, sa);
+  int n = S.size();
+  lcp.resize(n);
+  vector<int> r(n);
+  for (int i = 0; i < n; i++) r[sa[i]] = i;
+  for (int i = 0, p = 0; i < n; i++) if (r[i]) {
+    int j = sa[r[i] - 1];
+    while ((i + p < n ? S[i + p] : -1) == (j + p < n ? S[j + p] : -2)) ++p;
+    lcp[r[i]] = p;
+    p = max(p - 1, 0);
   }
 }
