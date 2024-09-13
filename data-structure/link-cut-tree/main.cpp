@@ -1,12 +1,10 @@
 struct Node {
   int par, lc, rc, lc2, rc2, pt;
-
   ll val;
   int hsz, lsz;
   ll hsum, lsum;
   ll hlazy, llazy;
   bool rev;
-
   Node(ll x) {
     par = lc = rc = lc2 = rc2 = pt = 0;
     val = x;
@@ -24,35 +22,27 @@ struct Node {
     rev = false;
   }
 };
-
 Node NS[MAXN + 10];
 
 void recalc(int node) {
   if (node == 0) return;
   assert(NS[node].hlazy == 0 && NS[node].llazy == 0 && !NS[node].rev);
   int l = NS[node].lc, r = NS[node].rc, l2 = NS[node].lc2, r2 = NS[node].rc2, p = NS[node].pt;
-
   NS[node].hsz = NS[l].hsz + NS[r].hsz + 1;
   NS[node].lsz = NS[l].lsz + NS[r].lsz + (NS[l2].hsz + NS[l2].lsz) + (NS[r2].hsz + NS[r2].lsz) + (NS[p].hsz + NS[p].lsz);
-
   NS[node].hsum = NS[l].hsum + NS[r].hsum + NS[node].val;
   NS[node].lsum = NS[l].lsum + NS[r].lsum + (NS[l2].hsum + NS[l2].lsum) + (NS[r2].hsum + NS[r2].lsum) + (NS[p].hsum + NS[p].lsum);
 }
-
 void apply(int node, ll hupd, ll lupd, bool rev) {
   if (node == 0) return;
-
   NS[node].rev ^= rev;
   NS[node].hlazy += hupd;
   NS[node].llazy += lupd;
-
   if (rev) swap(NS[node].lc, NS[node].rc);
-
   NS[node].val += hupd;
   NS[node].hsum += hupd * NS[node].hsz;
   if (NS[node].lsz) NS[node].lsum += lupd * NS[node].lsz;
 }
-
 void prop(int node) {
   if (node == 0) return;
   apply(NS[node].lc, NS[node].hlazy, NS[node].llazy, NS[node].rev);
@@ -60,7 +50,6 @@ void prop(int node) {
   apply(NS[node].lc2, NS[node].llazy, NS[node].llazy, false);
   apply(NS[node].rc2, NS[node].llazy, NS[node].llazy, false);
   apply(NS[node].pt, NS[node].llazy, NS[node].llazy, false);
-
   NS[node].hlazy = NS[node].llazy = 0;
   NS[node].rev = false;
 }
@@ -70,7 +59,6 @@ bool isRoot2(int x) { return (NS[x].par == 0 || NS[NS[x].par].pt == x); }
 void prop_anc(int x) { if (!isRoot(x)) prop_anc(NS[x].par); prop(x); }
 void prop_anc2(int x) { if (!isRoot2(x)) prop_anc2(NS[x].par); prop(x); }
 void prop_anc3(int x) { if (NS[x].par) prop_anc3(NS[x].par); prop(x); }
-
 void rotate(int x) {
   assert(x != 0 && !isRoot(x));
   int p = NS[x].par, q;
@@ -156,7 +144,6 @@ int find_right(int x) {
 void erase(int x) {
   assert(isRoot2(x));
   prop(x);
-
   int p = NS[x].lc2, q = NS[x].rc2;
   NS[x].lc2 = 0;
   NS[x].rc2 = 0;
