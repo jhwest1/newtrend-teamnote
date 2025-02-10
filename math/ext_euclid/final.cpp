@@ -22,7 +22,7 @@ bool crt(ll x1, ll m1, ll x2, ll m2, ll &a, ll &b) {
   if (x1 % g != x2 % g) return false;
   ll r = x1 % g;
   m1 /= g; m2 /= g; x1 /= g; x2 /= g;
-  ll x = (dll)x1 * m2 * get_inv(m2, m1) + (dll)x2 * m1 * get_inv(m1, m2);
+  dll x = (dll)x1 * m2 * get_inv(m2, m1) + (dll)x2 * m1 * get_inv(m1, m2);
   ll m = m1 * m2;
   a = g * mmod(x, m) + r;
   b = g * m;
